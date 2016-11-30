@@ -1,0 +1,25 @@
+postgres:
+  image: postgres:latest
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+  ports:
+    - '5432:5432'
+  volumes:
+    - "./postgres/data/:/var/lib/postgresql/data"
+
+wildfly:
+  image: jboss/wildfly
+  ports:
+    - '8080:8080'
+  ports:
+    - "8080:8080"
+    - "9990:9990"
+  volumes:
+    - "./wildfly/data/:/opt/jboss/wildfly/standalone/deployments"
+
+debian:
+  build: .
+  links:
+    - postgres
+    - wildfly
